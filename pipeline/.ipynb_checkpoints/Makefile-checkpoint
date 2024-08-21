@@ -1,10 +1,10 @@
-all:  arithmetics_A arithmetics_B swap flip_array linked_list linked_list.s
+all:  arithmetics_A arithmetics_B swap flip_array linked_list
 
 
 #arraySort
 
 EXTRA_CFLAGS = -DHAVE_LINUX_PERF_EVENT_H
-CFLAGS = -O3
+CFLAGS = -O3 -g 
 
 arithmetics_A: arithmetics.c 
 	$(CC) -DA -O0 $(EXTRA_CFLAGS) arithmetics.c -o arithmetics_A
@@ -22,10 +22,8 @@ flip_array: flip_array.c
 	$(CC) -S -O2 $(EXTRA_CFLAGS) flip_array.c -o flip_array.s
 
 linked_list: linked_list.c perfstats.c 
-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) perfstats.c  linked_list.c -o linked_list
-
-linked_list.s: linked_list.c perfstats.c 
-	$(CC) -S $(CFLAGS) $(EXTRA_CFLAGS) linked_list.c -o linked_list.s
+    $(CC) -S $(CFLAGS) $(EXTRA_CFLAGS) linked_list.c -o linked_list.s
+    $(CC) $(CFLAGS) $(EXTRA_CFLAGS) perfstats.c  linked_list.c -o linked_list
 	
 clean:
-		rm -f arithmetics arithmetics_A arithmetics_B linked_list flip_array swap linked_list.s
+		rm -f arithmetics arithmetics_A arithmetics_B linked_list flip_array swap
